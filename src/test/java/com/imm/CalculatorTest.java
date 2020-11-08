@@ -1,5 +1,7 @@
 package com.imm;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -30,12 +32,19 @@ public class CalculatorTest {
         assertEquals(0, Calculator.divide(1, 2));
     }
 
-    @Test
+//    @BeforeEach
+//    void beforeEach() {
+//        Calculator.reset();
+//        System.out.println("beforeEach");
+//    }
+
+    @RepeatedTest(10)
+//    @Execution(ExecutionMode.SAME_THREAD)
     void countTest() {
-        Calculator.count(2);
-        Calculator.count(2);
-        int count = Calculator.count(2);
-        System.out.println(count);
-        assertEquals(6, count);
+//        Calculator.count(2);
+//        Calculator.count(2);
+        int count = Calculator.count(1);
+        System.out.println(Thread.currentThread().getId() + "--->" + count);
+//        assertEquals(6, count);
     }
 }
