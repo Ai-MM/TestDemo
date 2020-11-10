@@ -43,8 +43,8 @@ public class CalculatorTest {
     void countTest() {
 //        Calculator.count(2);
 //        Calculator.count(2);
-        int count = Calculator.count(1);
-        System.out.println(Thread.currentThread().getId() + "--->" + count);
+        int count = Calculator.synCount2(1);
+        System.out.println(Thread.currentThread().getId() + "--->" + count + "--->" + System.currentTimeMillis());
 //        assertEquals(6, count);
     }
 }
