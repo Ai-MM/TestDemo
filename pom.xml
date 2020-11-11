@@ -43,12 +43,11 @@
       <version>2.13.6</version>
       <scope>test</scope>
     </dependency>
-    <!-- testng -->
+    <!-- selenium-server -->
     <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>7.0.0</version>
-      <scope>test</scope>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-server</artifactId>
+      <version>3.141.59</version>
     </dependency>
   </dependencies>
   
