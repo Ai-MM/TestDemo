@@ -32,4 +32,14 @@ public class WeChatWork extends BaseTest {
         }
         driver.navigate().refresh();
     }
+
+    @Test
+    void saveLocalStorageTest() {
+        driver.get("https://docs.qq.com/");
+        try {
+            LoginUtil.saveLocalStorage(driver);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
