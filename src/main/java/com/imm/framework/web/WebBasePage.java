@@ -54,7 +54,11 @@ public class WebBasePage {
     }
 
     public void refresh() {
-        driver.navigate().refresh();
+        driver.navigate().refresh(); //刷新页面
+    }
+
+    public void quit() {
+        driver.quit(); //退出driver
     }
 
     public void uploadFile(By by, String fileName) {
