@@ -1,5 +1,11 @@
 package com.imm.utils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 /**
@@ -22,7 +28,7 @@ public class FakerUtil {
     //11位手机号
     public static String phoneNumber() {
         Random random = new Random();
-        return "188" +
+        return "111" +
                 random.nextInt(10) +
                 String.valueOf(System.currentTimeMillis()).substring(7) +
                 random.nextInt(10);
@@ -32,6 +38,9 @@ public class FakerUtil {
         System.out.println("timeStamp: " + timeStamp());
         System.out.println("threadTimeStamp: " + threadTimeStamp());
         System.out.println("phoneNumber: " + phoneNumber());
-        System.out.println(FakerUtil.class.getResource("/junit-platform.properties").getFile().substring(1));
+        System.out.println(Thread.currentThread().getContextClassLoader().getResource(""));
+        System.out.println(FakerUtil.class.getResource("/"));
+        System.out.println(FakerUtil.class.getResource("").getPath());
+        System.out.println(new File("").getAbsolutePath()+"\\src\\main\\resources");
     }
 }

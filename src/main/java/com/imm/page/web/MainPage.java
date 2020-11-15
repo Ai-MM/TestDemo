@@ -10,11 +10,11 @@ import org.openqa.selenium.By;
  */
 public class MainPage extends WebBasePage {
     public MainPage() {
-        driver.get("https://work.weixin.qq.com/wework_admin/frame#index");
+        driver.get("https://work.weixin.qq.com/wework_admin/frame#index"); //进入首页
     }
 
     public ContactPage toContactPage() {
-        click(By.id("menu_contacts"));
+        click(By.id("menu_contacts")); //点击通讯录
         return new ContactPage();
     }
 }
