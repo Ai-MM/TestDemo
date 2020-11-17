@@ -37,20 +37,31 @@ public class WebBasePage {
         wait = new WebDriverWait(driver, 10); //设置显示等待，10s
     }
 
+    public WebBasePage(WebDriver driver) {
+        this.driver = driver;
+        wait = new WebDriverWait(driver, 10);
+    }
+
     public void click(By by) {
-        wait.until(ExpectedConditions.elementToBeClickable(by)).click(); //显示等待某个元素可被点击
+        wait.until(ExpectedConditions.elementToBeClickable(by)).click(); //显示等待某个元素可被点击，然后点击
+    }
+
+    public void click(By by, int index) {
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElements(by).get(index))).click();
     }
 
     public void sendKeys(By by, String content) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(content); //显示等待某个元素可见
+        wait.until(ExpectedConditions.elementToBeClickable(by)).click(); //显示等待某个元素可被点击，然后点击
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).clear(); //显示等待某个元素可见，然后清空
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(content); //显示等待某个元素可见，然后输入
     }
 
     public String getText(By by) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(by)).getText(); //显示等待某个元素可见
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by)).getText(); //显示等待某个元素可见，然后获取文本
     }
 
     public void clear(By by) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).clear(); //显示等待某个元素可见
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).clear(); //显示等待某个元素可见，然后清空
     }
 
     public void refresh() {
@@ -64,6 +75,6 @@ public class WebBasePage {
     public void uploadFile(By by, String fileName) {
         //将格式设置为UTF-8，避免文件名含有中文时乱码
         String fileNameDecode = URLDecoder.decode(this.getClass().getResource("/" + fileName).getPath(), StandardCharsets.UTF_8).substring(1);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(fileNameDecode); //显示等待某个元素可见
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(fileNameDecode); //显示等待某个元素可见，然后输入
     }
 }

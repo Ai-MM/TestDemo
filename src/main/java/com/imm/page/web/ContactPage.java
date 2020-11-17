@@ -2,6 +2,9 @@ package com.imm.page.web;
 
 import com.imm.framework.web.WebBasePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
  * @Author: iMM
@@ -9,6 +12,10 @@ import org.openqa.selenium.By;
  * @Date: 2020/11/14
  */
 public class ContactPage extends WebBasePage {
+
+    public ContactPage(WebDriver driver) {
+        super(driver);
+    }
 
     public ContactPage addMember(String username, String acctid, String mobile) {
         click(By.linkText("通讯录")); //点击通讯录
@@ -21,18 +28,41 @@ public class ContactPage extends WebBasePage {
         return this;
     }
 
-    public ContactPage search(String content) {
-        sendKeys(By.cssSelector("[id=memberSearchInput]"), content); //搜索姓名/账号/手机号，最好搜索账号（唯一）
-        return this;
-    }
-
     public ContactPage deleteMember() {
         click(By.cssSelector("[class='qui_btn ww_btn js_del_member']")); //点击删除
         click(By.linkText("确认")); //点击确认
         return this;
     }
 
+    public ContactPage addDepartment(String departmentName, String selectDepartment) {
+        click(By.cssSelector("[class=member_colLeft_top_addBtn]")); //点击搜索框后的+
+        click(By.cssSelector("[class=js_create_party]")); //点击添加部门
+        sendKeys(By.cssSelector("[name=name]"), departmentName); //输入部门名称
+        click(By.linkText("选择所属部门")); //点击选择所属部门
+        //根据部门名称点击部门
+        click(By.linkText("MZ"), 1);
+        click(By.linkText("确定")); //点击确定
+        return this;
+    }
+
+    public ContactPage deleteDepartment() {
+        while (driver.findElements(By.cssSelector("[class=\"icon jstree-contextmenu-hover\"]")).size() > 1) {
+            click(By.cssSelector("[class=\"icon jstree-contextmenu-hover\"]"), 2);
+        }
+        return this;
+    }
+
+
+    public ContactPage search(String content) {
+        sendKeys(By.cssSelector("[id=memberSearchInput]"), content); //搜索姓名/账号/手机号，最好搜索账号（唯一）
+        return this;
+    }
+
     public String getAcctId() {
         return getText(By.cssSelector("[class='member_display_cover_detail'] div:nth-child(3)"));
+    }
+
+    public String getDepartmentName() {
+        return getText(By.cssSelector("[id=party_name]"));
     }
 }
