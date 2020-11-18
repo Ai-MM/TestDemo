@@ -1,11 +1,11 @@
 package com.imm.page.web;
 
-import com.imm.framework.web.WebBasePage;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @Author: iMM
@@ -15,17 +15,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class ContactPageTest extends BaseTest {
     ContactPage contactPage = mainPage.toContactPage();
 
-    @Test
-    void addMemberTest() {
-        contactPage.addMember("test", "test", "18883857944").search("test");
-        String acctId = contactPage.getAcctId();
+    @ParameterizedTest
+    @CsvSource({
+            "test1, test1, '11111111111'",
+            "test2, test2, '11111111112'",
+            "test3, test3, '11111111113'"
+    })
+    void addMemberTest(String userName, String acctId, String mobile) {
+        contactPage.addMember(userName, acctId, mobile).search(userName);
+        String actualAcctId = contactPage.getAcctId();
         contactPage.deleteMember();
-        assertTrue(acctId.contains("test"));
+        assertTrue(actualAcctId.contains(acctId));
     }
 
     @Test
     void addDepartmentTest() {
         String departmentName = contactPage.addDepartment("测试部门", "MZ").search("测试部门").getDepartmentName();
-        assertEquals(departmentName, "测试部门");
+        System.out.println(departmentName);
+        assertEquals("测试部门", departmentName);
+        contactPage.clearSearch().deleteDepartment("测试部门");
     }
 }

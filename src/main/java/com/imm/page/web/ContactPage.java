@@ -3,8 +3,7 @@ package com.imm.page.web;
 import com.imm.framework.web.WebBasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * @Author: iMM
@@ -13,8 +12,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class ContactPage extends WebBasePage {
 
-    public ContactPage(WebDriver driver) {
-        super(driver);
+    By search = By.cssSelector("[id=memberSearchInput]");
+
+    public ContactPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
     }
 
     public ContactPage addMember(String username, String acctid, String mobile) {
@@ -39,22 +40,33 @@ public class ContactPage extends WebBasePage {
         click(By.cssSelector("[class=js_create_party]")); //点击添加部门
         sendKeys(By.cssSelector("[name=name]"), departmentName); //输入部门名称
         click(By.linkText("选择所属部门")); //点击选择所属部门
-        //根据部门名称点击部门
-        click(By.linkText("MZ"), 1);
+        click(By.linkText("MZ"), 1); //根据部门名称点击部门
         click(By.linkText("确定")); //点击确定
         return this;
     }
 
-    public ContactPage deleteDepartment() {
-        while (driver.findElements(By.cssSelector("[class=\"icon jstree-contextmenu-hover\"]")).size() > 1) {
-            click(By.cssSelector("[class=\"icon jstree-contextmenu-hover\"]"), 2);
-        }
+    public ContactPage deleteDepartment(String departmentName) {
+        click(By.linkText(departmentName));
+        click(By.xpath("//a[text()=\"" + departmentName + "\"]/span"));
+        click(By.cssSelector("body > ul > li:nth-child(7) > a")); //点击删除
+        click(By.linkText("确定")); //点击确定
+//        while (driver.findElements(By.cssSelector("[class=\"jstree-anchor\"]")).size() > 0) { //当存在多个部门时
+//            System.out.println(driver.findElements(By.cssSelector("[class=\"jstree-anchor\"]")).size());
+//            click(By.cssSelector("[class=\"jstree-anchor\"]")); //点击列表中的第二个部门
+//            click(By.cssSelector("[class=\"icon jstree-contextmenu-hover\"]"),1); //点击右侧弹出下拉框
+//            click(By.cssSelector("body > ul > li:nth-child(7) > a")); //点击删除
+//            click(By.linkText("确定")); //点击确定
+//        }
         return this;
     }
 
-
     public ContactPage search(String content) {
-        sendKeys(By.cssSelector("[id=memberSearchInput]"), content); //搜索姓名/账号/手机号，最好搜索账号（唯一）
+        sendKeys(search, content); //搜索姓名/账号/手机号，最好搜索账号（唯一）
+        return this;
+    }
+
+    public ContactPage clearSearch() {
+        click(By.cssSelector("[id=\"clearMemberSearchInput\"]")); //清空搜索框
         return this;
     }
 
@@ -63,6 +75,6 @@ public class ContactPage extends WebBasePage {
     }
 
     public String getDepartmentName() {
-        return getText(By.cssSelector("[id=party_name]"));
+        return getText(By.cssSelector("[class=ww_searchResult_item_Curr]"));
     }
 }

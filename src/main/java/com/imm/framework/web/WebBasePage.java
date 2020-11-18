@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -32,14 +30,13 @@ public class WebBasePage {
 //            driver = new EdgeDriver();
 //        }
         driver = new ChromeDriver(new ChromeOptions().setExperimentalOption("debuggerAddress", "127.0.0.1:9999"));
-//        driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //设置隐式等待，10s
         wait = new WebDriverWait(driver, 10); //设置显示等待，10s
     }
 
-    public WebBasePage(WebDriver driver) {
+    public WebBasePage(WebDriver driver,WebDriverWait wait) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, 10);
+        this.wait = wait;
     }
 
     public void click(By by) {
@@ -52,8 +49,8 @@ public class WebBasePage {
 
     public void sendKeys(By by, String content) {
         wait.until(ExpectedConditions.elementToBeClickable(by)).click(); //显示等待某个元素可被点击，然后点击
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).clear(); //显示等待某个元素可见，然后清空
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(content); //显示等待某个元素可见，然后输入
+        driver.findElement(by).clear(); //清空输入框
+        driver.findElement(by).sendKeys(content); //输入内容
     }
 
     public String getText(By by) {
