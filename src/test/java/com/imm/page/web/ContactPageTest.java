@@ -26,6 +26,7 @@ class ContactPageTest extends BaseTest {
         String actualAcctId = contactPage.getAcctId();
         System.out.println(actualAcctId);
         contactPage.deleteMember();
+        contactPage.clearSearch();
         assertTrue(actualAcctId.contains(acctId));
     }
 
