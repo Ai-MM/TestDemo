@@ -4,6 +4,7 @@ import com.imm.framework.app.AppBasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
@@ -12,8 +13,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * @Date: 2020/11/19
  */
 public class ContactPage extends AppBasePage {
-    public ContactPage(AppiumDriver<MobileElement> driver, WebDriverWait wait) {
-        super(driver, wait);
+    public ContactPage(AppiumDriver<MobileElement> driver) {
+        super(driver);
     }
 
     public ContactPage addMember(String userName, String mobile, String sex) {
@@ -22,7 +23,9 @@ public class ContactPage extends AppBasePage {
         sendKeys("必填", userName);
         sendKeys("手机号", mobile);
         click("男");
-        click(sex);
+//        new WebDriverWait(getDriver(), 30).until(ExpectedConditions.elementToBeClickable().click();
+//        click(sex);
+        click("男");
         click("保存");
         return this;
     }

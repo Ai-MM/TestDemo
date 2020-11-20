@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @Date: 2020/11/15
  */
 class ContactPageTest extends BaseTest {
-    ContactPage contactPage = mainPage.toContactPage();
+    private final ContactPage contactPage = getMainPage().toContactPage();
 
     @ParameterizedTest
     @CsvSource({

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
  * @Date: 2020/11/17
  */
 public class BaseTest {
-    static MainPage mainPage;
+    private static MainPage mainPage;
 
     @BeforeAll
     static void beforeAll() {
@@ -19,5 +19,13 @@ public class BaseTest {
     @AfterAll
     static void afterAll() {
         mainPage.quit();
+    }
+
+    public static MainPage getMainPage() {
+        return mainPage;
+    }
+
+    public static void setMainPage(MainPage mainPage) {
+        BaseTest.mainPage = mainPage;
     }
 }

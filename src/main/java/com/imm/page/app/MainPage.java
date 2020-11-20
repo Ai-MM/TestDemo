@@ -1,6 +1,7 @@
 package com.imm.page.app;
 
 import com.imm.framework.app.AppBasePage;
+import org.openqa.selenium.support.PageFactory;
 
 /**
  * @Author: iMM
@@ -14,6 +15,6 @@ public class MainPage extends AppBasePage {
 
     public ContactPage toContactPage() {
         click("通讯录");
-        return new ContactPage(driver, wait);
+        return new ContactPage(getDriver());
     }
 }

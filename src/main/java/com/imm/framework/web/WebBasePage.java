@@ -1,11 +1,10 @@
 package com.imm.framework.web;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -17,8 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @Date: 2020/11/14
  */
 public class WebBasePage {
-    public WebDriver driver;
-    public WebDriverWait wait;
+    private WebDriver driver;
 
     public WebBasePage() {
         // 启动指定浏览器，使用命令 [mvn test -Dtest=类名 -Dbrowser=浏览器名] 执行测试
@@ -31,47 +29,73 @@ public class WebBasePage {
 //        }
         driver = new ChromeDriver(new ChromeOptions().setExperimentalOption("debuggerAddress", "127.0.0.1:9999"));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //设置隐式等待，10s
-        wait = new WebDriverWait(driver, 10); //设置显示等待，10s
     }
 
-    public WebBasePage(WebDriver driver,WebDriverWait wait) {
+    public WebBasePage(WebDriver driver) {
         this.driver = driver;
-        this.wait = wait;
     }
 
     public void click(By by) {
-        wait.until(ExpectedConditions.elementToBeClickable(by)).click(); //显示等待某个元素可被点击，然后点击
+        driver.findElement(by).click();
     }
 
     public void click(By by, int index) {
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElements(by).get(index))).click();
+        (driver.findElements(by).get(index)).click();
+    }
+
+    public void jsClickByCss(String cssSelector) {
+        ((JavascriptExecutor) driver).executeScript("$(arguments[0]).click()", cssSelector);
+//        ((JavascriptExecutor) driver).executeScript("document.querySelector(arguments[0]).click()", cssSelector);
+    }
+
+    public void jsClickByXpath(String xpath) {
+//        ((JavascriptExecutor) driver).executeScript("$x(arguments[0]).click()", xpath); //这种写法不可用
+        //只能定位第一个元素
+        ((JavascriptExecutor) driver).executeScript("document.evaluate(arguments[0],document).iterateNext().click()", xpath);
+    }
+
+    public int jsElementSize(String cssSelector) {
+        return Integer.parseInt(((JavascriptExecutor) driver).executeScript("return $(arguments[0]).length", cssSelector).toString());
+//        return Integer.parseInt(((JavascriptExecutor) driver).executeScript("return document.querySelector(arguments[0]).length", cssSelector).toString());
     }
 
     public void sendKeys(By by, String content) {
-        wait.until(ExpectedConditions.elementToBeClickable(by)).click(); //显示等待某个元素可被点击，然后点击
-        driver.findElement(by).clear(); //清空输入框
-        driver.findElement(by).sendKeys(content); //输入内容
+        driver.findElement(by).click();
+        driver.findElement(by).clear();
+        driver.findElement(by).sendKeys(content);
     }
 
     public String getText(By by) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(by)).getText(); //显示等待某个元素可见，然后获取文本
+        return driver.findElement(by).getText();
     }
 
     public void clear(By by) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).clear(); //显示等待某个元素可见，然后清空
+        driver.findElement(by).clear();
     }
 
     public void refresh() {
-        driver.navigate().refresh(); //刷新页面
+        driver.navigate().refresh();
+    }
+
+    public void maximize() {
+        driver.manage().window().maximize();
     }
 
     public void quit() {
-        driver.quit(); //退出driver
+        driver.quit();
     }
 
     public void uploadFile(By by, String fileName) {
         //将格式设置为UTF-8，避免文件名含有中文时乱码
         String fileNameDecode = URLDecoder.decode(this.getClass().getResource("/" + fileName).getPath(), StandardCharsets.UTF_8).substring(1);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(fileNameDecode); //显示等待某个元素可见，然后输入
+        driver.findElement(by).sendKeys(fileNameDecode);
+    }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
     }
 }

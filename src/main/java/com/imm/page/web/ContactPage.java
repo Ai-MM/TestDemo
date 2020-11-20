@@ -14,13 +14,17 @@ public class ContactPage extends WebBasePage {
 
     By search = By.cssSelector("[id=memberSearchInput]");
 
-    public ContactPage(WebDriver driver, WebDriverWait wait) {
-        super(driver, wait);
+    public ContactPage(WebDriver driver) {
+        super(driver);
     }
 
     public ContactPage addMember(String username, String acctid, String mobile) {
         click(By.linkText("通讯录")); //点击通讯录
         click(By.linkText("添加成员")); //点击添加成员
+        do {
+            jsClickByCss("[class='ww_operationBar']>[class='qui_btn ww_btn js_add_member']"); //点击添加成员
+            System.out.println(jsElementSize("[class=\"qui_btn ww_btn ww_btn_Blue js_btn_continue\"]"));
+        } while (jsElementSize("[class=\"qui_btn ww_btn ww_btn_Blue js_btn_continue\"]") == 0); //如果添加并保存
         sendKeys(By.cssSelector("[name=username]"), username); //输入姓名
         sendKeys(By.cssSelector("[name=acctid]"), acctid); //输入账号
         sendKeys(By.cssSelector("[name=mobile]"), mobile); //输入手机号

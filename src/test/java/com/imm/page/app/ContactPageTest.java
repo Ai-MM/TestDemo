@@ -6,16 +6,18 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @Author: iMM
- * @Description:
+ * @Description: 企业微信-移动端 联系人页面
  * @Date: 2020/11/19
  */
 public class ContactPageTest {
-    static ContactPage contactPage;
+    private static ContactPage contactPage;
 
     @BeforeAll
     static void beforeAll() {
         MainPage mainPage = new MainPage();
         contactPage = mainPage.toContactPage();
+        System.out.println(mainPage.getDriver());
+        System.out.println(contactPage.getDriver());
     }
 
     @Test
@@ -31,6 +33,6 @@ public class ContactPageTest {
 
     @AfterAll
     static void afterAll() {
-//        contactPage.quit();
+        contactPage.quit();
     }
 }

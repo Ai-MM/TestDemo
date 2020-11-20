@@ -5,8 +5,6 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,15 +16,13 @@ import java.util.concurrent.TimeUnit;
  * @Date: 2020/11/19
  */
 public class AppBasePage {
-    public AppiumDriver<MobileElement> driver;
-    public WebDriverWait wait;
+    private AppiumDriver<MobileElement> driver;
 
     public AppBasePage() {
     }
 
-    public AppBasePage(AppiumDriver<MobileElement> driver, WebDriverWait wait) {
+    public AppBasePage(AppiumDriver<MobileElement> driver) {
         this.driver = driver;
-        this.wait = wait;
     }
 
     public AppBasePage(String udid, String packageName, String activityName) {
@@ -53,28 +49,37 @@ public class AppBasePage {
             e.printStackTrace();
         }
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 10);
     }
 
     public void click(By by) {
-        wait.until(ExpectedConditions.elementToBeClickable(by)).click();
+            driver.findElement(by).click();
     }
 
     public void click(String text) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@text='" + text + "']"))).click();
+            driver.findElement(By.xpath("//*[@text='" + text + "']")).click();
     }
 
     public void sendKeys(By by, String content) {
-        wait.until(ExpectedConditions.elementToBeClickable(by)).click();
-        driver.findElement(by).clear();
-        driver.findElement(by).sendKeys(content);
+            driver.findElement(by).click();
+            driver.findElement(by).clear();
+            driver.findElement(by).sendKeys(content);
     }
 
     public void sendKeys(String text,String content) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='" + text + "']"))).sendKeys(content);
+            driver.findElement(By.xpath("//*[@text='" + text + "']")).click();
+            driver.findElement(By.xpath("//*[@text='" + text + "']")).clear();
+            driver.findElement(By.xpath("//*[@text='" + text + "']")).sendKeys(content);
     }
 
     public void quit() {
         driver.quit();
+    }
+
+    public AppiumDriver<MobileElement> getDriver() {
+        return driver;
+    }
+
+    public void setDriver(AppiumDriver<MobileElement> driver) {
+        this.driver = driver;
     }
 }
