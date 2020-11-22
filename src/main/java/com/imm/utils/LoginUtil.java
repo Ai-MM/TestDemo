@@ -23,6 +23,7 @@ public class LoginUtil {
     //保存cookies到文件中
     public static void saveCookies(WebDriver driver) throws IOException {
         String fileName = new File("").getAbsolutePath() + "/src/main/resources/";
+        System.out.println("保存cookies文件: " + fileName + "cookies.yaml");
         new ObjectMapper(new YAMLFactory()).writeValue(new File(fileName + "cookies.yaml"), driver.manage().getCookies());
     }
 
@@ -30,7 +31,8 @@ public class LoginUtil {
     public static void loadCookies(WebDriver driver) throws IOException {
         TypeReference<List<HashMap<String, Object>>> listTypeReference = new TypeReference<>() {
         };
-        String fileName = URLDecoder.decode(FakerUtil.class.getResource("/").getPath(), StandardCharsets.UTF_8).substring(1);
+        String fileName = URLDecoder.decode((new File("").getAbsolutePath() + "/src/main/resources/"), StandardCharsets.UTF_8);
+        System.out.println("加载cookies文件: " + fileName + "cookies.yaml");
         List<HashMap<String, Object>> cookies = new ObjectMapper(new YAMLFactory()).readValue(new File(fileName + "cookies.yaml"), listTypeReference);
         cookies.forEach(cookie -> {
             driver.manage().addCookie(new Cookie(cookie.get("name").toString(), cookie.get("value").toString()));
@@ -56,7 +58,7 @@ public class LoginUtil {
     public static void loadLocalStorage(WebDriver driver) throws IOException {
         String line;
         JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
-        String fileName = URLDecoder.decode(FakerUtil.class.getResource("/").getPath(), StandardCharsets.UTF_8).substring(1);
+        String fileName = URLDecoder.decode((new File("").getAbsolutePath() + "/src/main/resources/"), StandardCharsets.UTF_8);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName + "localstorage.txt"));
         while ((line = bufferedReader.readLine()) != null) {
             StringTokenizer tokenizer = new StringTokenizer(line, ";");

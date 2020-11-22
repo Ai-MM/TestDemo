@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -34,13 +36,19 @@ public class FakerUtil {
                 random.nextInt(10);
     }
 
+    public static String currentTime() {
+        return new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(System.currentTimeMillis());
+    }
+
     public static void main(String[] args) {
         System.out.println("timeStamp: " + timeStamp());
         System.out.println("threadTimeStamp: " + threadTimeStamp());
         System.out.println("phoneNumber: " + phoneNumber());
+        System.out.println("currentTime: "+ currentTime());
         System.out.println(Thread.currentThread().getContextClassLoader().getResource(""));
-        System.out.println(FakerUtil.class.getResource("/"));
+        System.out.println(FakerUtil.class.getResource("/").getPath());
         System.out.println(FakerUtil.class.getResource("").getPath());
-        System.out.println(new File("").getAbsolutePath()+"\\src\\main\\resources");
+        System.out.println(new File("").getAbsolutePath() + "\\src\\main\\resources");
+        System.out.println(URLDecoder.decode(LoginUtil.class.getResource("/").getPath(), StandardCharsets.UTF_8).substring(1) + "cookies.yaml");
     }
 }

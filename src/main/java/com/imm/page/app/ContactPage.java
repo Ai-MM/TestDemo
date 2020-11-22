@@ -23,9 +23,9 @@ public class ContactPage extends AppBasePage {
         sendKeys("必填", userName);
         sendKeys("手机号", mobile);
         click("男");
-//        new WebDriverWait(getDriver(), 30).until(ExpectedConditions.elementToBeClickable().click();
-//        click(sex);
-        click("男");
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions
+                .elementToBeClickable(By.xpath("//*[@text='男']"))).click();
+//        click("男");
         click("保存");
         return this;
     }
@@ -40,7 +40,8 @@ public class ContactPage extends AppBasePage {
     }
 
     public ContactPage back() {
-        click(By.xpath("//*[@resource-id='com.tencent.wework:id/hxb']"));
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions
+                .elementToBeClickable(By.xpath("//*[@resource-id=\"com.tencent.wework:id/hxb\"]"))).click(); //点击返回
         return this;
     }
 }

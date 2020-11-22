@@ -16,8 +16,6 @@ public class ContactPageTest {
     static void beforeAll() {
         MainPage mainPage = new MainPage();
         contactPage = mainPage.toContactPage();
-        System.out.println(mainPage.getDriver());
-        System.out.println(contactPage.getDriver());
     }
 
     @Test

@@ -60,14 +60,10 @@ public class AppBasePage {
     }
 
     public void sendKeys(By by, String content) {
-            driver.findElement(by).click();
-            driver.findElement(by).clear();
             driver.findElement(by).sendKeys(content);
     }
 
     public void sendKeys(String text,String content) {
-            driver.findElement(By.xpath("//*[@text='" + text + "']")).click();
-            driver.findElement(By.xpath("//*[@text='" + text + "']")).clear();
             driver.findElement(By.xpath("//*[@text='" + text + "']")).sendKeys(content);
     }
 

@@ -1,14 +1,18 @@
 package com.imm.framework.web;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import com.imm.utils.FakerUtil;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 /**
  * @Author: iMM
@@ -17,30 +21,35 @@ import java.util.concurrent.TimeUnit;
  */
 public class WebBasePage {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     public WebBasePage() {
-        // 启动指定浏览器，使用命令 [mvn test -Dtest=类名 -Dbrowser=浏览器名] 执行测试
-//        if ("chrome".equals(System.getProperty("browser").toLowerCase())) {
-//            driver = new ChromeDriver();
-//        } else if ("firefox".equals(System.getProperty("browser").toLowerCase())) {
-//            driver = new FirefoxDriver();
-//        } else if ("edge".equals(System.getProperty("browser").toLowerCase())) {
-//            driver = new EdgeDriver();
-//        }
-        driver = new ChromeDriver(new ChromeOptions().setExperimentalOption("debuggerAddress", "127.0.0.1:9999"));
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //设置隐式等待，10s
+        driver = new ChromeDriver(new ChromeOptions()
+//                .addArguments("--headless")
+//                .addArguments("--window-size=1552,840")
+        );
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //设置隐式等待，10s
+        wait = new WebDriverWait(driver, 10);
     }
 
     public WebBasePage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void click(By by) {
-        driver.findElement(by).click();
+    public WebElement findElement(By by) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
-    public void click(By by, int index) {
-        (driver.findElements(by).get(index)).click();
+    public List<WebElement> findElements(By by) {
+        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+    }
+
+    public void click(By by) {
+        wait.until(ExpectedConditions.elementToBeClickable(findElement(by))).click();
+    }
+
+    public void click(WebElement element) {
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
     public void jsClickByCss(String cssSelector) {
@@ -49,28 +58,24 @@ public class WebBasePage {
     }
 
     public void jsClickByXpath(String xpath) {
-//        ((JavascriptExecutor) driver).executeScript("$x(arguments[0]).click()", xpath); //这种写法不可用
         //只能定位第一个元素
         ((JavascriptExecutor) driver).executeScript("document.evaluate(arguments[0],document).iterateNext().click()", xpath);
     }
 
-    public int jsElementSize(String cssSelector) {
+    public int jsElementsSize(String cssSelector) {
         return Integer.parseInt(((JavascriptExecutor) driver).executeScript("return $(arguments[0]).length", cssSelector).toString());
-//        return Integer.parseInt(((JavascriptExecutor) driver).executeScript("return document.querySelector(arguments[0]).length", cssSelector).toString());
     }
 
     public void sendKeys(By by, String content) {
-        driver.findElement(by).click();
-        driver.findElement(by).clear();
-        driver.findElement(by).sendKeys(content);
+        findElement(by).sendKeys(content);
     }
 
     public String getText(By by) {
-        return driver.findElement(by).getText();
+        return findElement(by).getText();
     }
 
     public void clear(By by) {
-        driver.findElement(by).clear();
+        findElement(by).clear();
     }
 
     public void refresh() {
@@ -82,13 +87,24 @@ public class WebBasePage {
     }
 
     public void quit() {
+        driver.close();
         driver.quit();
     }
 
     public void uploadFile(By by, String fileName) {
-        //将格式设置为UTF-8，避免文件名含有中文时乱码
+        //将格式设置为UTF-8，避免文件名含有中文时乱码（注：文件必须放在项目的resources目录下）
         String fileNameDecode = URLDecoder.decode(this.getClass().getResource("/" + fileName).getPath(), StandardCharsets.UTF_8).substring(1);
-        driver.findElement(by).sendKeys(fileNameDecode);
+        findElement(by).sendKeys(fileNameDecode);
+    }
+
+    public void saveScreenshot() {
+        try {
+            FileUtils.copyFile(((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE),
+                    new File(new File("").getAbsolutePath() +
+                            "/src/test/resources/screenshot/" + FakerUtil.currentTime() + ".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public WebDriver getDriver() {
@@ -97,5 +113,13 @@ public class WebBasePage {
 
     public void setDriver(WebDriver driver) {
         this.driver = driver;
+    }
+
+    public WebDriverWait getWait() {
+        return wait;
+    }
+
+    public void setWait(WebDriverWait wait) {
+        this.wait = wait;
     }
 }
