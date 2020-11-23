@@ -1,15 +1,8 @@
 package com.imm.page.web;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-
-import java.io.File;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @Description: 企业微信-联系人页面测试
  * @Date: 2020/11/15
  */
+//@Timeout(10)
 class ContactPageTest extends BaseTest {
     private final ContactPage contactPage = getMainPage().toContactPage();
 
@@ -31,25 +25,28 @@ class ContactPageTest extends BaseTest {
             "test5, test5, 11111111115",
             "test6, test6, 11111111116"
     })
-    void addMemberTest(String userName, String acctId, String mobile) {
-        contactPage.addMember(userName, acctId, mobile).search(userName);
-        String actualAcctId = contactPage.getAcctId();
-        System.out.println(actualAcctId);
+    void addMember(String userName, String acctId, String mobile) {
+        String actualAcctId = contactPage.addMember(userName, acctId, mobile).search(userName).getAcctId();
         contactPage.deleteMember();
         assertTrue(actualAcctId.contains(acctId));
     }
 
+//    @Test
+//    void updateMember() {
+//        String acctId = contactPage.search("1").updateMember("1", "2", "12345678900").search("2").getAcctId();
+//        assertTrue(acctId.contains("1"));
+//    }
+
     @Test
-    void addDepartmentTest() {
+    void addDepartment() {
         String departmentName = contactPage.addDepartment("测试部门", "MZ").search("测试部门").getDepartmentName();
-        System.out.println(departmentName);
         assertEquals("测试部门", departmentName);
         contactPage.clearSearch().deleteDepartment("测试部门");
     }
 
 //    @Test
-    void test() throws IOException {
-        File screenshot = ((TakesScreenshot) contactPage.getDriver()).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File("test.png"));
+    void updateDepartment() {
+        String departmentName = contactPage.updateDepartment("测试部门", "编辑部门测试").search("编辑部门测试").getDepartmentName();
+        assertEquals("编辑部门测试", departmentName);
     }
 }

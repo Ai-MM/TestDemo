@@ -31,7 +31,7 @@ public class LoginUtil {
     public static void loadCookies(WebDriver driver) throws IOException {
         TypeReference<List<HashMap<String, Object>>> listTypeReference = new TypeReference<>() {
         };
-        String fileName = URLDecoder.decode((new File("").getAbsolutePath() + "/src/main/resources/"), StandardCharsets.UTF_8);
+        String fileName = URLDecoder.decode(new File("").getAbsolutePath() + "/src/main/resources/", StandardCharsets.UTF_8);
         System.out.println("加载cookies文件: " + fileName + "cookies.yaml");
         List<HashMap<String, Object>> cookies = new ObjectMapper(new YAMLFactory()).readValue(new File(fileName + "cookies.yaml"), listTypeReference);
         cookies.forEach(cookie -> {
@@ -58,7 +58,7 @@ public class LoginUtil {
     public static void loadLocalStorage(WebDriver driver) throws IOException {
         String line;
         JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
-        String fileName = URLDecoder.decode((new File("").getAbsolutePath() + "/src/main/resources/"), StandardCharsets.UTF_8);
+        String fileName = URLDecoder.decode(new File("").getAbsolutePath() + "/src/main/resources/", StandardCharsets.UTF_8);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName + "localstorage.txt"));
         while ((line = bufferedReader.readLine()) != null) {
             StringTokenizer tokenizer = new StringTokenizer(line, ";");

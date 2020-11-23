@@ -5,6 +5,8 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -27,8 +29,11 @@ public class WebBasePage {
         driver = new ChromeDriver(new ChromeOptions()
 //                .addArguments("--headless")
 //                .addArguments("--window-size=1552,840")
+//                .addArguments("--user-data-dir=C:/Users/iMM/AppData/Local/Google/Chrome/User Data")
+                .setExperimentalOption("debuggerAddress", "127.0.0.1:9999")
         );
 //        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //设置隐式等待，10s
+        wait(10);
         wait = new WebDriverWait(driver, 10);
     }
 
@@ -45,11 +50,21 @@ public class WebBasePage {
     }
 
     public void click(By by) {
-        wait.until(ExpectedConditions.elementToBeClickable(findElement(by))).click();
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(findElement(by))).click();
+        } catch (Exception e) {
+            e.printStackTrace();
+            closeAlter();
+        }
     }
 
     public void click(WebElement element) {
-        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+        } catch (Exception e) {
+            e.printStackTrace();
+            closeAlter();
+        }
     }
 
     public void jsClickByCss(String cssSelector) {
@@ -67,11 +82,26 @@ public class WebBasePage {
     }
 
     public void sendKeys(By by, String content) {
-        findElement(by).sendKeys(content);
+        try {
+            findElement(by).sendKeys(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+            closeAlter();
+        }
+    }
+
+    public void moveToElement(By by) {
+        new Actions(driver).moveToElement(findElement(by));
     }
 
     public String getText(By by) {
-        return findElement(by).getText();
+        try {
+            return findElement(by).getText();
+        } catch (Exception e) {
+            e.printStackTrace();
+            closeAlter();
+        }
+        return "getText error";
     }
 
     public void clear(By by) {
@@ -87,13 +117,12 @@ public class WebBasePage {
     }
 
     public void quit() {
-        driver.close();
         driver.quit();
     }
 
     public void uploadFile(By by, String fileName) {
-        //将格式设置为UTF-8，避免文件名含有中文时乱码（注：文件必须放在项目的resources目录下）
-        String fileNameDecode = URLDecoder.decode(this.getClass().getResource("/" + fileName).getPath(), StandardCharsets.UTF_8).substring(1);
+        //将格式设置为UTF-8，避免文件名含有中文时乱码（注: 文件必须放在项目的resources目录下）
+        String fileNameDecode = URLDecoder.decode(new File("").getAbsolutePath() + "/src/main/resources/" + fileName, StandardCharsets.UTF_8);
         findElement(by).sendKeys(fileNameDecode);
     }
 
@@ -105,6 +134,35 @@ public class WebBasePage {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isAlterPresent() {
+        try {
+            driver.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void closeAlter() {
+        while (isAlterPresent()) {
+            try {
+                driver.switchTo().alert().dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+                try {
+                    driver.switchTo().alert().accept();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void wait(int seconds) {
+        this.wait = new WebDriverWait(getDriver(), seconds);
     }
 
     public WebDriver getDriver() {
