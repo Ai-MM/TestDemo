@@ -3,7 +3,6 @@ package com.imm.page.web;
 import com.imm.framework.web.WebBasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 /**
  * @Author: iMM
@@ -34,7 +33,7 @@ public class ContactPage extends WebBasePage {
 
     public ContactPage(WebDriver driver) {
         super(driver);
-        wait(10);
+        explicitWait(6);
     }
 
     public ContactPage addMember(String username, String acctId, String mobile) {
@@ -66,6 +65,14 @@ public class ContactPage extends WebBasePage {
     public ContactPage deleteMember() {
         click(deleteButton); //点击删除
         click(confirmButton); //点击确认
+        return this;
+    }
+
+    public ContactPage deleteAllMember() {
+        click(By.cssSelector("[class=\"ww_checkbox\"]"));
+//        click(By.cssSelector("[class=\"ww_checkbox\"]:nth(2)")); //这种css定位不可用
+        click(By.linkText("删除"));
+        click(confirmButton);
         return this;
     }
 

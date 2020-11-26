@@ -6,7 +6,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -33,8 +32,7 @@ public class WebBasePage {
                 .setExperimentalOption("debuggerAddress", "127.0.0.1:9999")
         );
 //        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //设置隐式等待，10s
-        wait(10);
-        wait = new WebDriverWait(driver, 10);
+//        wait = new WebDriverWait(driver, 10);
     }
 
     public WebBasePage(WebDriver driver) {
@@ -67,20 +65,6 @@ public class WebBasePage {
         }
     }
 
-    public void jsClickByCss(String cssSelector) {
-        ((JavascriptExecutor) driver).executeScript("$(arguments[0]).click()", cssSelector);
-//        ((JavascriptExecutor) driver).executeScript("document.querySelector(arguments[0]).click()", cssSelector);
-    }
-
-    public void jsClickByXpath(String xpath) {
-        //只能定位第一个元素
-        ((JavascriptExecutor) driver).executeScript("document.evaluate(arguments[0],document).iterateNext().click()", xpath);
-    }
-
-    public int jsElementsSize(String cssSelector) {
-        return Integer.parseInt(((JavascriptExecutor) driver).executeScript("return $(arguments[0]).length", cssSelector).toString());
-    }
-
     public void sendKeys(By by, String content) {
         try {
             findElement(by).sendKeys(content);
@@ -88,6 +72,11 @@ public class WebBasePage {
             e.printStackTrace();
             closeAlter();
         }
+    }
+
+    public void clearAndType(By by,String content) {
+        findElement(by).clear();
+        findElement(by).sendKeys(content);
     }
 
     public void moveToElement(By by) {
@@ -100,8 +89,8 @@ public class WebBasePage {
         } catch (Exception e) {
             e.printStackTrace();
             closeAlter();
+            return "getText error";
         }
-        return "getText error";
     }
 
     public void clear(By by) {
@@ -161,7 +150,7 @@ public class WebBasePage {
         }
     }
 
-    public void wait(int seconds) {
+    public void explicitWait(int seconds) {
         this.wait = new WebDriverWait(getDriver(), seconds);
     }
 
@@ -179,5 +168,15 @@ public class WebBasePage {
 
     public void setWait(WebDriverWait wait) {
         this.wait = wait;
+    }
+
+    public void jsClickByCss(String cssSelector) {
+        ((JavascriptExecutor) driver).executeScript("$(arguments[0]).click()", cssSelector);
+//        ((JavascriptExecutor) driver).executeScript("document.querySelector(arguments[0]).click()", cssSelector);
+    }
+
+    public void jsClickByXpath(String xpath) {
+        //只能定位第一个元素
+        ((JavascriptExecutor) driver).executeScript("document.evaluate(arguments[0],document).iterateNext().click()", xpath);
     }
 }

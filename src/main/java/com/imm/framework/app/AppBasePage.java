@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
@@ -51,20 +52,33 @@ public class AppBasePage {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
+    public WebElement findElement(By by) {
+        return driver.findElement(by);
+    }
+
     public void click(By by) {
-            driver.findElement(by).click();
+        driver.findElement(by).click();
     }
 
     public void click(String text) {
-            driver.findElement(By.xpath("//*[@text='" + text + "']")).click();
+        findElement(By.xpath("//*[@text='" + text + "']")).click();
     }
 
     public void sendKeys(By by, String content) {
-            driver.findElement(by).sendKeys(content);
+        findElement(by).sendKeys(content);
     }
 
-    public void sendKeys(String text,String content) {
-            driver.findElement(By.xpath("//*[@text='" + text + "']")).sendKeys(content);
+    public void sendKeys(String text, String content) {
+        findElement(By.xpath("//*[@text='" + text + "']")).sendKeys(content);
+    }
+
+    public void clear(By by) {
+        findElement(by).clear();
+    }
+
+    public void clearAndType(By by, String content) {
+        findElement(by).clear();
+        findElement(by).sendKeys(content);
     }
 
     public void quit() {

@@ -28,6 +28,7 @@ public class MainPage extends WebBasePage {
 //        }
 //        getDriver().get(url);
         maximize();
+        explicitWait(10);
 //        PageFactory.initElements(getDriver(), this);
     }
 

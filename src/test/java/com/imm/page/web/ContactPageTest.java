@@ -1,8 +1,11 @@
 package com.imm.page.web;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,6 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ContactPageTest extends BaseTest {
     private final ContactPage contactPage = getMainPage().toContactPage();
 
+    @BeforeEach
+    void beforeEach() {
+        contactPage.deleteAllMember();
+    }
+
     @ParameterizedTest
     @CsvSource({
             "test1, test1, 11111111111",
@@ -26,16 +34,21 @@ class ContactPageTest extends BaseTest {
             "test6, test6, 11111111116"
     })
     void addMember(String userName, String acctId, String mobile) {
-        String actualAcctId = contactPage.addMember(userName, acctId, mobile).search(userName).getAcctId();
-        contactPage.deleteMember();
+        String actualAcctId = contactPage.addMember(userName, acctId, mobile).search(mobile).getAcctId();
+        contactPage.clearSearch();
         assertTrue(actualAcctId.contains(acctId));
     }
 
-//    @Test
-//    void updateMember() {
-//        String acctId = contactPage.search("1").updateMember("1", "2", "12345678900").search("2").getAcctId();
-//        assertTrue(acctId.contains("1"));
-//    }
+    @ParameterizedTest
+    @CsvSource({
+            "updateTest, 66666666666"
+    })
+    void updateMember(String username, String mobile) {
+        contactPage.addMember("addMember", "addMember", "10000000000");
+        String acctId = contactPage.search(mobile).updateMember("addMember", username, mobile).search(mobile).getAcctId();
+        contactPage.clearSearch();
+        assertTrue(acctId.contains("addMember"));
+    }
 
     @Test
     void addDepartment() {
@@ -44,7 +57,7 @@ class ContactPageTest extends BaseTest {
         contactPage.clearSearch().deleteDepartment("测试部门");
     }
 
-//    @Test
+    //    @Test
     void updateDepartment() {
         String departmentName = contactPage.updateDepartment("测试部门", "编辑部门测试").search("编辑部门测试").getDepartmentName();
         assertEquals("编辑部门测试", departmentName);
