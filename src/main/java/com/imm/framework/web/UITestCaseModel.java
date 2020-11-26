@@ -17,6 +17,11 @@ public class UITestCaseModel {
     public String description; //用例描述
     public List<HashMap<String, Object>> steps; //测试步骤
 
+    /**
+     * 读取测试用例数据驱动文件填充为UITestCaseModel对象
+     * @param fileName 测试用例数据驱动文件
+     * @return UI测试用例对象
+     */
     public static UITestCaseModel loadTestCase(String fileName) {
         try {
             return new ObjectMapper(new YAMLFactory())
