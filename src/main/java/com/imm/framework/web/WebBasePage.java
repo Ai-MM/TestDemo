@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @Author: iMM
- * @Description: Web自动化基础封装
+ * @Description: Web-UI自动化基础封装
  * @Date: 2020/11/14
  */
 public class WebBasePage {
@@ -74,13 +74,13 @@ public class WebBasePage {
         }
     }
 
-    public void clearAndType(By by,String content) {
+    public void clearAndType(By by, String content) {
         findElement(by).clear();
         findElement(by).sendKeys(content);
     }
 
     public void moveToElement(By by) {
-        new Actions(driver).moveToElement(findElement(by));
+        new Actions(driver).moveToElement(findElement(by)).build().perform();
     }
 
     public String getText(By by) {

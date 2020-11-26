@@ -45,6 +45,7 @@ public class FakerUtil {
         System.out.println("threadTimeStamp: " + threadTimeStamp());
         System.out.println("phoneNumber: " + phoneNumber());
         System.out.println("currentTime: "+ currentTime());
+
         System.out.println(Thread.currentThread().getContextClassLoader().getResource(""));
         System.out.println(FakerUtil.class.getResource("/").getPath());
         System.out.println(FakerUtil.class.getResource("").getPath());

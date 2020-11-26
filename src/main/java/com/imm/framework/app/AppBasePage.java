@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: iMM
- * @Description: 移动端android基础封装
+ * @Description: Android-UI自动化基础封装
  * @Date: 2020/11/19
  */
 public class AppBasePage {
