@@ -1,0 +1,7 @@
+data:
+  - first
+  - second
+
+steps:
+  - init: [ mainPage, com.imm.framework.page.MainPage ]
+  - mainPage.search:

@@ -31,9 +31,10 @@ public class LoginUtil {
     public static void loadCookies(WebDriver driver) throws IOException {
         TypeReference<List<HashMap<String, Object>>> listTypeReference = new TypeReference<>() {
         };
-        String fileName = URLDecoder.decode(new File("").getAbsolutePath() + "/src/main/resources/", StandardCharsets.UTF_8);
-        System.out.println("加载cookies文件: " + fileName + "cookies.yaml");
-        List<HashMap<String, Object>> cookies = new ObjectMapper(new YAMLFactory()).readValue(new File(fileName + "cookies.yaml"), listTypeReference);
+        String fileName = URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource("cookies.yaml").getPath(), StandardCharsets.UTF_8);
+        System.out.println("加载cookies文件: " + fileName);
+        List<HashMap<String, Object>> cookies = new ObjectMapper(new YAMLFactory())
+                .readValue(new File(fileName), listTypeReference);
         cookies.forEach(cookie -> {
             driver.manage().addCookie(new Cookie(cookie.get("name").toString(), cookie.get("value").toString()));
         });
@@ -58,8 +59,9 @@ public class LoginUtil {
     public static void loadLocalStorage(WebDriver driver) throws IOException {
         String line;
         JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
-        String fileName = URLDecoder.decode(new File("").getAbsolutePath() + "/src/main/resources/", StandardCharsets.UTF_8);
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName + "localstorage.txt"));
+        String fileName = URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource("localStorage.txt").getPath(), StandardCharsets.UTF_8);
+        System.out.println("加载localStorage文件: " + fileName);
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
         while ((line = bufferedReader.readLine()) != null) {
             StringTokenizer tokenizer = new StringTokenizer(line, ";");
             jsDriver.executeScript("window.localStorage.setItem(arguments[0],arguments[1])",

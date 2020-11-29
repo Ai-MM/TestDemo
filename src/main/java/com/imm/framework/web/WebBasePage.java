@@ -29,7 +29,7 @@ public class WebBasePage {
 //                .addArguments("--headless")
 //                .addArguments("--window-size=1552,840")
 //                .addArguments("--user-data-dir=C:/Users/iMM/AppData/Local/Google/Chrome/User Data")
-                .setExperimentalOption("debuggerAddress", "127.0.0.1:9999")
+//                .setExperimentalOption("debuggerAddress", "127.0.0.1:9999")
         );
 //        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //设置隐式等待，10s
 //        wait = new WebDriverWait(driver, 10);
@@ -40,16 +40,19 @@ public class WebBasePage {
     }
 
     public WebElement findElement(By by) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+//        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        return driver.findElement(by);
     }
 
     public List<WebElement> findElements(By by) {
-        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+//        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+        return driver.findElements(by);
     }
 
     public void click(By by) {
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(findElement(by))).click();
+//            wait.until(ExpectedConditions.elementToBeClickable(findElement(by))).click();
+            findElement(by).click();
         } catch (Exception e) {
             e.printStackTrace();
             closeAlter();
@@ -58,7 +61,8 @@ public class WebBasePage {
 
     public void click(WebElement element) {
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+//            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+            element.click();
         } catch (Exception e) {
             e.printStackTrace();
             closeAlter();
@@ -111,7 +115,7 @@ public class WebBasePage {
 
     public void uploadFile(By by, String fileName) {
         //将格式设置为UTF-8，避免文件名含有中文时乱码（注: 文件必须放在项目的resources目录下）
-        String fileNameDecode = URLDecoder.decode(new File("").getAbsolutePath() + "/src/main/resources/" + fileName, StandardCharsets.UTF_8);
+        String fileNameDecode = URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource(fileName).getPath(), StandardCharsets.UTF_8);
         findElement(by).sendKeys(fileNameDecode);
     }
 

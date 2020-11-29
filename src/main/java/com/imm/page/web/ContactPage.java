@@ -33,7 +33,7 @@ public class ContactPage extends WebBasePage {
 
     public ContactPage(WebDriver driver) {
         super(driver);
-        explicitWait(6);
+//        explicitWait(6);
     }
 
     public ContactPage addMember(String username, String acctId, String mobile) {
