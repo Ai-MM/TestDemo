@@ -15,28 +15,26 @@
     </properties>
 
     <dependencies>
-        <!-- junit-jupiter -->
+        <!-- https://github.com/junit-team/junit5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
-        <!-- junit-platform-launcher -->
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
             <version>1.7.0</version>
             <scope>test</scope>
         </dependency>
-        <!-- junit-platform-runner -->
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
             <version>1.7.0</version>
             <scope>test</scope>
         </dependency>
-        <!-- selenium-server -->
+        <!-- https://github.com/SeleniumHQ/selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-server</artifactId>
@@ -48,59 +46,60 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- io.appium java-client-->
+        <!-- https://github.com/appium-->
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
             <version>7.3.0</version>
         </dependency>
-        <!-- rest-assured -->
+        <!-- https://github.com/rest-assured/rest-assured -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>4.3.1</version>
         </dependency>
-        <!-- jackson-dataformat-yaml -->
+        <!-- https://github.com/FasterXML/jackson-dataformats-text/tree/master/yaml -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>2.11.3</version>
         </dependency>
-        <!-- allure-junit5 -->
+        <!-- https://github.com/allure-framework/allure2 -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
             <version>2.13.6</version>
             <scope>test</scope>
         </dependency>
-        <!-- wiremock-jre8 -->
+        <!-- https://github.com/tomakehurst/wiremock -->
         <dependency>
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock-jre8</artifactId>
             <version>2.27.2</version>
         </dependency>
-        <!-- browsermob-core -->
+        <!-- https://github.com/lightbody/browsermob-proxy -->
         <dependency>
             <groupId>net.lightbody.bmp</groupId>
             <artifactId>browsermob-core</artifactId>
             <version>2.1.5</version>
         </dependency>
-<!--        &lt;!&ndash; spring-context &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-context</artifactId>-->
-<!--            <version>5.1.8.RELEASE</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; spring-aspects &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-aspects</artifactId>-->
-<!--            <version>5.1.8.RELEASE</version>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash; spring-context &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework</groupId>-->
+        <!--            <artifactId>spring-context</artifactId>-->
+        <!--            <version>5.1.8.RELEASE</version>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; spring-aspects &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework</groupId>-->
+        <!--            <artifactId>spring-aspects</artifactId>-->
+        <!--            <version>5.1.8.RELEASE</version>-->
+        <!--        </dependency>-->
     </dependencies>
 
     <build>
         <plugins>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M3</version>
