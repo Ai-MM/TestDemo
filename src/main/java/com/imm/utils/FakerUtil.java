@@ -26,7 +26,7 @@ public class FakerUtil {
         return String.valueOf(System.currentTimeMillis());
     }
 
-    //线程Id+T+时间戳
+    //线程id+T+时间戳
     public static String threadTimeStamp() {
         return Thread.currentThread().getId() + "T" + System.currentTimeMillis();
     }

@@ -1,6 +1,7 @@
 package com.imm.mock;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.imm.utils.FileUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -36,13 +37,10 @@ public class WireMockTest {
     @Test
     void demo2() throws IOException, InterruptedException {
         stubFor(get(urlMatching(".*")).atPriority(10)
-                .willReturn(aResponse().proxiedFrom("https://ceshiren.com")
-                ));
+                .willReturn(aResponse().proxiedFrom("https://ceshiren.com")));
         stubFor(get(urlMatching("/c/job/31/l/latest.json.*")).atPriority(1)
                 .willReturn(aResponse()
-                                .withBody(Thread.currentThread().getContextClassLoader()
-                                        .getResourceAsStream("wiremock_response.json").readAllBytes())
-                ));
+                        .withBody(FileUtil.getResourceAsStream("wiremock_response.json").readAllBytes())));
         Thread.sleep(600000);
     }
 }
