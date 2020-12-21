@@ -1,7 +1,5 @@
 package com.imm.framework.page;
 
-import com.imm.framework.web.WebBasePage;
-import org.openqa.grid.common.GridRole;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 

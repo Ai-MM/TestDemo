@@ -2,7 +2,7 @@ package com.imm.mock;
 
 import org.junit.jupiter.api.Test;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
 
 /**
  * @Author: iMM

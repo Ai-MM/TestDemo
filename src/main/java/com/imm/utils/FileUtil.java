@@ -5,7 +5,7 @@ import java.net.URL;
 
 /**
  * @Author: iMM
- * @Description:
+ * @Description: 获取文件工具类
  * @Date: 2020/12/14
  */
 public class FileUtil {

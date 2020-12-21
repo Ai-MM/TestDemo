@@ -15,6 +15,12 @@
     </properties>
 
     <dependencies>
+        <!-- https://github.com/rest-assured/rest-assured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.3.1</version>
+        </dependency>
         <!-- https://github.com/junit-team/junit5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -37,26 +43,14 @@
         <!-- https://github.com/SeleniumHQ/selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
+            <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- https://github.com/appium-->
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
             <version>7.3.0</version>
-        </dependency>
-        <!-- https://github.com/rest-assured/rest-assured -->
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>4.3.1</version>
         </dependency>
         <!-- https://github.com/FasterXML/jackson-dataformats-text/tree/master/yaml -->
         <dependency>
@@ -88,6 +82,11 @@
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
             <version>2.9.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
         </dependency>
         <!--        &lt;!&ndash; spring-context &ndash;&gt;-->
         <!--        <dependency>-->
