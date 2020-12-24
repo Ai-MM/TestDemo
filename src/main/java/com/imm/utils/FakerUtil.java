@@ -29,7 +29,7 @@ public class FakerUtil {
      * @return 11位手机号，111开头
      */
     public static String phoneNumber() {
-        return "111" + randomInt(10, 99) + String.valueOf(System.currentTimeMillis()).substring(7);
+        return "188" + randomInt(10000000, 99999999);
     }
 
     /**
