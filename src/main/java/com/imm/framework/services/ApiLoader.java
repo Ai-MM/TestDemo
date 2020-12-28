@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 public class ApiLoader {
     private static final Logger logger = LoggerFactory.getLogger(ApiLoader.class);
 
-    private static ArrayList<ApiObjectModel> apis;
+    private static ArrayList<ApiObjectModel> apis = new ArrayList<>();
 
     /**
      * 加载文件夹下所有包含_api的文件为ApiObjectModel对象，并添加到列表中

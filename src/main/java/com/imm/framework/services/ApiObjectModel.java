@@ -24,19 +24,19 @@ public class ApiObjectModel {
     /**
      * 加载单一文件为ApiObjectModel对象
      *
-     * @param filePath 文件路径，默认根路径为resources
+     * @param filePath 文件，默认根路径为resources
      * @return 接口对象ApiObjectModel
      */
     public static ApiObjectModel load(String filePath) {
         try {
-            return new ObjectMapper(new YAMLFactory()).readValue(FileUtil.getResourceAsStream(filePath), ApiObjectModel.class);
+            return new ObjectMapper(new YAMLFactory())
+                    .readValue(FileUtil.getResourceAsStream(filePath), ApiObjectModel.class);
         } catch (IOException e) {
             e.printStackTrace();
             logger.info("从" + filePath + "加载ApiObjectModel对象失败: " + e);
             return null;
         }
     }
-
 
     /*********************************************** Getter And Setter ************************************************/
     public String getName() {

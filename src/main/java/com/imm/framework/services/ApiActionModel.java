@@ -17,16 +17,16 @@ import static io.restassured.RestAssured.given;
 public class ApiActionModel {
     private String method = "get";
     private String url;
-    private String body;
-    private String contentType;
-    private HashMap<String, Object> queryParams;
-    private HashMap<String, Object> headers;
     private String get;
     private String post;
     private String put;
     private String delete;
-    private Response response;
+    private String body;
+    private String contentType;
+    private HashMap<String, Object> queryParams;
+    private HashMap<String, Object> headers;
     private ArrayList<String> formalParams;
+    private Response response;
     private HashMap<String, Object> actionVariables;
 
     public Response run(ArrayList<String> actualParams) {
@@ -77,4 +77,3 @@ public class ApiActionModel {
         return this.response = request.request(method, runUrl).then().log().all().extract().response();
     }
 }
-
