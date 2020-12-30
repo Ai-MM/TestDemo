@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 /**
  * @Author: iMM
  * @Description:
@@ -23,8 +25,8 @@ public class ApiTestCaseModel {
     private String name;
     private String description;
     private ArrayList<StepModel> steps;
-    private ArrayList<Executable> assertList;
-    private HashMap<String, Object> testCaseVariables;
+    private ArrayList<Executable> assertList = new ArrayList<>();
+    private HashMap<String, Object> testCaseVariables = new HashMap<>();
 
     /**
      * 加载单一文件为ApiTestCaseModel对象
@@ -44,10 +46,26 @@ public class ApiTestCaseModel {
     }
 
     public void run() {
+        //加载用例层关键字变量
         testCaseVariables.put("timeStamp", FakerUtil.timeStamp());
         testCaseVariables.put("phoneNumber", FakerUtil.phoneNumber());
         logger.info("接口测试用例变量更新: " + testCaseVariables);
-
+        //遍历step并执行
+        steps.forEach(step -> {
+            StepResult stepResult = step.run(testCaseVariables);
+            //处理step保存的变量，在接口之间传递
+            HashMap<String, Object> stepVariables = stepResult.getStepVariables();
+            if (stepVariables.size() > 0) {
+                testCaseVariables.putAll(stepVariables);
+                logger.info("用例变量更新: " + testCaseVariables);
+            }
+            //处理断言列表，最后进行统一软断言
+            ArrayList<Executable> assertList = stepResult.getAssertList();
+            if (assertList.size() > 0) {
+                this.assertList.addAll(assertList);
+            }
+        });
+        assertAll(assertList);
     }
 
     /*********************************************** Getter And Setter ************************************************/

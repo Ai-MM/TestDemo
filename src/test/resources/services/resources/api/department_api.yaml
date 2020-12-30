@@ -3,13 +3,13 @@ name: department
 actions:
   #ApiObjectMethodModel
   createDepartment:
-    formalParam: ["name","name_en"]
+    formalParams: ["name","name_en"]
     headers:
       Content-Type: application/json
     body: '{"name": "${name}","name_en": "${name_en}","parentid": 1}'
     post: https://qyapi.weixin.qq.com/cgi-bin/department/create?access_token=${accesstoken}
   updateDepartment:
-    formalParam: ["departmentId","name","name_en"]
+    formalParams: ["departmentId","name","name_en"]
     contentType: application/json
     body: '{
                "id": ${departmentId},
@@ -19,12 +19,12 @@ actions:
            }'
     post: https://qyapi.weixin.qq.com/cgi-bin/department/update?access_token=${accesstoken}
   listDepartment:
-    formalParam: ["departmentId"]
-    query:
+    formalParams: ["departmentId"]
+    queryParams:
       id: ${departmentId}
     get: https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=${accesstoken}
   deletDepartment:
-    formalParam: ["departmentId"]
-    query:
+    formalParams: ["departmentId"]
+    queryParams:
       id: ${departmentId}
     post: https://qyapi.weixin.qq.com/cgi-bin/department/delete?access_token=${accesstoken}

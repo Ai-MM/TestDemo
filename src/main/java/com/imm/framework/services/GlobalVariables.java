@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class GlobalVariables {
     private static HashMap<String, Object> globalVariables;
 
+    /*********************************************** Getter And Setter ************************************************/
     public static HashMap<String, Object> getGlobalVariables() {
         return globalVariables;
     }

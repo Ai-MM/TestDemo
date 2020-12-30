@@ -14,6 +14,7 @@ import static io.restassured.RestAssured.given;
  * @Description: 接口动作对象
  * @Date: 2020/12/26
  */
+//@JsonIgnoreProperties(ignoreUnknown = true) //出现UnrecognizedPropertyException: Unrecognized field解决方法
 public class ApiActionModel {
     private String method = "get";
     private String url;
@@ -26,8 +27,8 @@ public class ApiActionModel {
     private HashMap<String, Object> queryParams;
     private HashMap<String, Object> headers;
     private ArrayList<String> formalParams;
-    private Response response;
     private HashMap<String, Object> actionVariables;
+    private Response response;
 
     public Response run(ArrayList<String> actualParams) {
         String runBody = this.body;
